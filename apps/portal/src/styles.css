@@ -1,0 +1,51 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind components;
+@tailwind base;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply h-full bg-white;
+  }
+
+  body {
+    @apply h-full;
+  }
+
+  #root {
+    @apply h-full;
+  }
+}
+
+.label-regular {
+  @apply block text-sm font-medium text-gray-700;
+}
+
+.label-error {
+  @apply text-red-600;
+}
+
+.input-regular {
+  @apply appearance-none block w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm;
+}
+
+.input-error {
+  @apply appearance-none block w-full text-red-900 placeholder-red-300 border-red-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm;
+}
+
+.button {
+  @apply flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.button-primary {
+  @apply bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500;
+}
+
+.button-disabled {
+  @apply opacity-75 cursor-not-allowed;
+}
+
+@layer components {
+}
+@layer utilities {
+}
