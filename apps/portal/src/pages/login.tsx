@@ -1,8 +1,6 @@
+import { Button, PasswordInput, TextInput } from '@mantine/core';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-
-import { BaseButton } from '../components/base/button';
-import { BaseInput } from '../components/base/input';
 
 interface LoginValues {
   email: string;
@@ -54,7 +52,6 @@ export function Login() {
                     handleSubmit,
                     errors,
                     touched,
-                    handleBlur,
                     isValid,
                     dirty,
                   } = formik;
@@ -66,39 +63,41 @@ export function Login() {
                       className="space-y-6"
                     >
                       <div className="mb-3">
-                        <BaseInput
-                          type="email"
-                          id="email"
+                        <TextInput
                           name="email"
                           label="Email"
+                          placeholder="Email"
+                          radius="sm"
+                          size="md"
+                          error={touched.email && errors.email}
                           value={values.email}
-                          error={errors.email}
-                          touched={touched.email || false}
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
+                          onChange={handleChange}
+                          required
                         />
                       </div>
                       <div className="mb-3">
-                        <BaseInput
-                          type="password"
-                          id="password"
+                        <PasswordInput
                           name="password"
                           label="Password"
-                          value={values.password}
+                          placeholder="Password"
+                          radius="sm"
+                          size="md"
                           error={errors.password}
-                          touched={touched.password || false}
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
+                          value={values.password}
+                          onChange={handleChange}
+                          required
                         />
                       </div>
                       <div>
-                        <BaseButton
-                          type="submit"
-                          color="primary"
+                        <Button
+                          radius="sm"
+                          size="lg"
                           disabled={!(dirty && isValid)}
+                          type="submit"
+                          color="red"
                         >
-                          Sign in
-                        </BaseButton>
+                          Sign In
+                        </Button>
                       </div>
                     </form>
                   );

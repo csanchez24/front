@@ -4,12 +4,15 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './styles.css';
 import App from './app';
+import { MantineProvider } from '@mantine/core';
 
 ReactDOM.render(
   <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <MantineProvider theme={{ fontFamily: 'Inter var' }}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </MantineProvider>
   </StrictMode>,
   document.getElementById('root')
 );
