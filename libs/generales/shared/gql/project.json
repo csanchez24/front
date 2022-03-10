@@ -1,0 +1,23 @@
+{
+  "root": "libs/generales/shared/gql",
+  "sourceRoot": "libs/generales/shared/gql/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/generales/shared/gql/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/generales/shared/gql"],
+      "options": {
+        "jestConfig": "libs/generales/shared/gql/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

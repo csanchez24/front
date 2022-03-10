@@ -2,9 +2,15 @@ import { Outlet } from 'react-router-dom';
 import { BellIcon, UserCircleIcon } from '@heroicons/react/outline';
 import { useState } from 'react';
 import { ActionIcon, Drawer } from '@mantine/core';
+import { NotificationsList } from '../../notificationsList';
+import { UserForm } from '../../userForm';
+import { useGener04Query } from '@front/generales/shared/gql';
 
 export const Layout: React.FC = () => {
-  const [opened, setOpened] = useState(false);
+  const [isUserOpen, setIsUserOpen] = useState(false);
+  const [isNotificationOpen, setNotificationOpen] = useState(false);
+
+  const { data, loading } = useGener04Query();
 
   return (
     <main className="">
@@ -23,7 +29,10 @@ export const Layout: React.FC = () => {
               </div>
               <div className="">
                 <div className="ml-4 flex gap-4 items-center md:ml-6">
-                  <ActionIcon variant="transparent">
+                  <ActionIcon
+                    variant="transparent"
+                    onClick={() => setNotificationOpen(true)}
+                  >
                     <BellIcon
                       className="h-6 w-6 text-white"
                       aria-hidden="true"
@@ -31,7 +40,7 @@ export const Layout: React.FC = () => {
                   </ActionIcon>
                   <ActionIcon
                     variant="transparent"
-                    onClick={() => setOpened(true)}
+                    onClick={() => setIsUserOpen(true)}
                   >
                     <UserCircleIcon
                       className="h-6 w-6 text-white"
@@ -46,12 +55,26 @@ export const Layout: React.FC = () => {
         <Outlet />
       </div>
       <Drawer
-        opened={opened}
+        opened={isUserOpen}
         position="right"
-        onClose={() => setOpened(false)}
+        onClose={() => setIsUserOpen(false)}
         title="User"
+        size="xl"
         padding="md"
-      ></Drawer>
+      >
+        <UserForm />
+      </Drawer>
+      <Drawer
+        opened={isNotificationOpen}
+        position="right"
+        onClose={() => setNotificationOpen(false)}
+        title="Notification"
+        size="xl"
+        padding="md"
+        className="h-full overflow-auto "
+      >
+        <NotificationsList loading={loading} notifications={data?.gener04} />
+      </Drawer>
     </main>
   );
 };

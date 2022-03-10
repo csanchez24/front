@@ -1,8 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/base/layout';
 import { PrivateRoute } from './components/base/private-route';
-import { Home } from './pages/home';
-import { Login } from './pages/login';
+import { Home } from './pages/home/';
+import { Login } from './pages/login/';
 
 export function App() {
   return (

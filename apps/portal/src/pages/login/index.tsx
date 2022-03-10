@@ -1,6 +1,8 @@
 import { Button, PasswordInput, TextInput } from '@mantine/core';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { useLoginLazyQuery } from '@front/generales/shared/gql';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginValues {
   email: string;
@@ -8,6 +10,18 @@ interface LoginValues {
 }
 
 export function Login() {
+  const navigate = useNavigate();
+  const [login] = useLoginLazyQuery({
+    onCompleted(login) {
+      console.log(login);
+      if (!login.login) {
+        console.log('no login');
+        return;
+      }
+      localStorage.setItem('auth', login.login?.token as string);
+      navigate('/home');
+    },
+  });
   const signInSchema = Yup.object().shape({
     email: Yup.string().email().required('Required'),
     password: Yup.string().required('Required').min(4, 'Mininum 4 chars'),
@@ -20,7 +34,9 @@ export function Login() {
 
   const submitForm = (values: LoginValues) => {
     const { email, password } = values;
-    console.log(values);
+    login({
+      variables: { loginInput: { email, password } },
+    });
   };
 
   return (
@@ -94,7 +110,7 @@ export function Login() {
                           size="lg"
                           disabled={!(dirty && isValid)}
                           type="submit"
-                          color="red"
+                          color="indigo"
                         >
                           Sign In
                         </Button>

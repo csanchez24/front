@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@front/generales/shared/gql": [
+        "libs/generales/shared/gql/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
