@@ -1,6 +1,13 @@
+const { join } = require('path');
+
 module.exports = {
   plugins: {
-    tailwindcss: { config: './apps/portal/tailwind.config.js' },
+    'postcss-import': {},
+    //'postcss-nested': {},
+    'tailwindcss/nesting': 'postcss-nested',
+    tailwindcss: {
+      config: join(__dirname, 'tailwind.config.js'),
+    },
     autoprefixer: {},
   },
 };

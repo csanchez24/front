@@ -1,0 +1,16 @@
+@import './tailwind.css';
+
+@layer base {
+  html {
+    @apply h-full bg-white;
+  }
+
+  body {
+    font-family: 'Inter var';
+    @apply h-full m-0;
+  }
+
+  #root {
+    @apply h-full;
+  }
+}

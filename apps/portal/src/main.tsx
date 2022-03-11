@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
-import './styles.css';
+import './styles/index.css';
 import App from './app';
 import { MantineProvider } from '@mantine/core';
 import { ApolloProvider } from '@apollo/client';
