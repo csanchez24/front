@@ -4,10 +4,10 @@ gql`
   query Profile {
     getProfile {
       id
-      firstName
-      lastName
+      first_name
+      last_name
       email
-      isActive
+      is_active
       roles {
         id
         role

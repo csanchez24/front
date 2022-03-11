@@ -1,9 +1,9 @@
 import { Badge, Skeleton } from '@mantine/core';
-import { Gener04 } from '@front/generales/shared/gql';
+import { Notification } from '@front/generales/shared/gql';
 
 interface NotificationsListProps {
   loading: boolean;
-  notifications: Gener04[] | undefined;
+  notifications: Notification[] | undefined;
 }
 
 export const NotificationsList: React.FC<NotificationsListProps> = ({
@@ -33,7 +33,7 @@ export const NotificationsList: React.FC<NotificationsListProps> = ({
                 ) : null}
               </div>
               <p className="mt-1 text-sm text-gray-600 ">
-                {notification.createdAt}
+                {notification.created_at}
               </p>
             </div>
           </li>

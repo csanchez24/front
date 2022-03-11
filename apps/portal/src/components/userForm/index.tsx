@@ -1,20 +1,20 @@
 import { Skeleton } from '@mantine/core';
 import {
   useProfileQuery,
-  useUpdateGener02Mutation,
+  useUpdateUserMutation,
 } from '@front/generales/shared/gql';
 import { EditInput } from '../base/editInput';
 
 export const UserForm: React.FC = () => {
   const { data, loading } = useProfileQuery();
-  const [updateGener02] = useUpdateGener02Mutation();
+  const [updateGener02] = useUpdateUserMutation();
 
   const updateFirstName = (value: string) => {
     updateGener02({
       variables: {
-        updateGener02Input: {
+        updateUserInput: {
           id: parseInt(data!.getProfile.id),
-          firstName: value,
+          first_name: value,
         },
       },
     });
@@ -23,9 +23,9 @@ export const UserForm: React.FC = () => {
   const updateLastName = (value: string) => {
     updateGener02({
       variables: {
-        updateGener02Input: {
+        updateUserInput: {
           id: parseInt(data!.getProfile.id),
-          lastName: value,
+          last_name: value,
         },
       },
     });
@@ -34,7 +34,7 @@ export const UserForm: React.FC = () => {
   const updateEmail = (value: string) => {
     updateGener02({
       variables: {
-        updateGener02Input: {
+        updateUserInput: {
           id: parseInt(data!.getProfile.id),
           email: value,
         },
@@ -42,19 +42,18 @@ export const UserForm: React.FC = () => {
     });
   };
 
-  console.log(data);
   return (
     <Skeleton visible={loading}>
       <div>
         <EditInput
           label="First Name"
-          value={data?.getProfile.firstName ?? ''}
+          value={data?.getProfile.first_name ?? ''}
           inputType="text"
           onSave={updateFirstName}
         />
         <EditInput
           label="Last Name"
-          value={data?.getProfile.lastName ?? ''}
+          value={data?.getProfile.last_name ?? ''}
           inputType="text"
           onSave={updateLastName}
         />

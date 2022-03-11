@@ -4,13 +4,13 @@ import { useState } from 'react';
 import { ActionIcon, Drawer } from '@mantine/core';
 import { NotificationsList } from '../../notificationsList';
 import { UserForm } from '../../userForm';
-import { useGener04Query } from '@front/generales/shared/gql';
+import { useNotificationQuery } from '@front/generales/shared/gql';
 
 export const Layout: React.FC = () => {
   const [isUserOpen, setIsUserOpen] = useState(false);
   const [isNotificationOpen, setNotificationOpen] = useState(false);
 
-  const { data, loading } = useGener04Query();
+  const { data, loading } = useNotificationQuery();
 
   return (
     <main className="">
@@ -73,7 +73,10 @@ export const Layout: React.FC = () => {
         padding="md"
         className="h-full overflow-auto "
       >
-        <NotificationsList loading={loading} notifications={data?.gener04} />
+        <NotificationsList
+          loading={loading}
+          notifications={data?.notification}
+        />
       </Drawer>
     </main>
   );

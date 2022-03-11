@@ -1,13 +1,14 @@
 import { gql } from '@apollo/client';
 
 gql`
-  query Gener04 {
-    gener04 {
+  query Notification {
+    notification {
       id
+      title
       message
       read
-      createdAt
-      updatedAt
+      created_at
+      updated_at
     }
   }
 `;
