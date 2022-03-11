@@ -1,8 +1,6 @@
 {
   "version": 2,
   "projects": {
-    "portal": "apps/portal",
-    "portal-e2e": "apps/portal-e2e",
     "generales-shared-gql": {
       "root": "libs/generales/shared/gql",
       "targets": {
@@ -14,6 +12,8 @@
           }
         }
       }
-    }
+    },
+    "portal": "apps/portal",
+    "portal-e2e": "apps/portal-e2e"
   }
 }
