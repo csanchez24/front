@@ -111,6 +111,7 @@ export function Login() {
                           disabled={!(dirty && isValid)}
                           type="submit"
                           color="indigo"
+                          className="bg-indigo-500"
                         >
                           Sign In
                         </Button>
