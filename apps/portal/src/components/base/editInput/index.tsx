@@ -1,10 +1,12 @@
-import { Button, TextInput } from '@mantine/core';
+import { Button, Select, SelectItem, TextInput } from '@mantine/core';
 import { useEffect, useState } from 'react';
 
 interface EditInputProps {
   label: string;
   value: string;
-  inputType: 'text' | 'number' | 'password';
+  input: 'text' | 'select';
+  inputType?: 'text' | 'number' | 'password';
+  selectValues?: SelectItem[];
   onSave(value?: string): void;
 }
 
@@ -12,10 +14,12 @@ export const EditInput: React.FC<EditInputProps> = ({
   label,
   value,
   inputType,
+  input,
+  selectValues,
   onSave,
 }) => {
   const [editMode, setEditMode] = useState(false);
-  const [val, setVal] = useState('');
+  const [val, setVal] = useState<string | undefined>('');
 
   useEffect(() => {
     if (!val) setVal(value);
@@ -34,11 +38,19 @@ export const EditInput: React.FC<EditInputProps> = ({
       <div>{label}</div>
       <div className="flex gap-2 justify-end items-center flex-1">
         {editMode ? (
-          <TextInput
-            type={inputType}
-            value={val}
-            onChange={(event) => setVal(event.currentTarget.value)}
-          />
+          input === 'text' ? (
+            <TextInput
+              type={inputType}
+              value={val}
+              onChange={(event) => setVal(event.currentTarget.value)}
+            />
+          ) : (
+            <Select
+              value={val}
+              data={selectValues!}
+              onChange={(value) => setVal(value!)}
+            />
+          )
         ) : (
           value
         )}

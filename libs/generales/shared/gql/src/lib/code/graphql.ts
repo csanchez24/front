@@ -19,6 +19,7 @@ export type Application = {
   __typename?: 'Application';
   code: Scalars['String'];
   id: Scalars['ID'];
+  image: Scalars['String'];
   name: Scalars['String'];
   order: Scalars['Float'];
 };
@@ -39,15 +40,26 @@ export type CreateApplicationInput = {
   order: Scalars['Float'];
 };
 
+export enum Languague {
+  En = 'EN',
+  Es = 'ES'
+}
+
 export type Mutation = {
   __typename?: 'Mutation';
   createApplication: Application;
+  updateNotification: Notification;
   updateUser: User;
 };
 
 
 export type MutationCreateApplicationArgs = {
   createApplicationInput: CreateApplicationInput;
+};
+
+
+export type MutationUpdateNotificationArgs = {
+  updateNotificationInput: UpdateNotificationInput;
 };
 
 
@@ -92,11 +104,16 @@ export type Role = {
   users: Array<User>;
 };
 
+export type UpdateNotificationInput = {
+  id: Scalars['String'];
+};
+
 export type UpdateUserInput = {
   email?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   id: Scalars['Float'];
   is_active?: InputMaybe<Scalars['Boolean']>;
+  languague?: InputMaybe<Languague>;
   last_name?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   roles?: InputMaybe<Array<Scalars['Float']>>;
@@ -108,10 +125,16 @@ export type User = {
   first_name: Scalars['String'];
   id: Scalars['ID'];
   is_active: Scalars['Boolean'];
+  languague: Languague;
   last_name: Scalars['String'];
   password: Scalars['String'];
   roles: Array<Role>;
 };
+
+export type AllApplicationQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllApplicationQuery = { __typename?: 'Query', allApplication: Array<{ __typename?: 'Application', id: string, name: string, image: string, order: number }> };
 
 export type LoginQueryVariables = Exact<{
   loginInput: AuthInput;
@@ -128,16 +151,60 @@ export type NotificationQuery = { __typename?: 'Query', notification: Array<{ __
 export type ProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProfileQuery = { __typename?: 'Query', getProfile: { __typename?: 'User', id: string, first_name: string, last_name: string, email: string, is_active: boolean, roles: Array<{ __typename?: 'Role', id: string, role: string, description: string }> } };
+export type ProfileQuery = { __typename?: 'Query', getProfile: { __typename?: 'User', id: string, first_name: string, last_name: string, email: string, languague: Languague, is_active: boolean, roles: Array<{ __typename?: 'Role', id: string, role: string, description: string }> } };
+
+export type UpdateNotificationMutationVariables = Exact<{
+  updateNotificationInput: UpdateNotificationInput;
+}>;
+
+
+export type UpdateNotificationMutation = { __typename?: 'Mutation', updateNotification: { __typename?: 'Notification', id: string, title: string, message: string, read: boolean, created_at: string, updated_at: string } };
 
 export type UpdateUserMutationVariables = Exact<{
   updateUserInput: UpdateUserInput;
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, first_name: string, last_name: string, email: string } };
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, first_name: string, last_name: string, email: string, languague: Languague } };
 
 
+export const AllApplicationDocument = gql`
+    query AllApplication {
+  allApplication {
+    id
+    name
+    image
+    order
+  }
+}
+    `;
+
+/**
+ * __useAllApplicationQuery__
+ *
+ * To run a query within a React component, call `useAllApplicationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllApplicationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllApplicationQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAllApplicationQuery(baseOptions?: Apollo.QueryHookOptions<AllApplicationQuery, AllApplicationQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllApplicationQuery, AllApplicationQueryVariables>(AllApplicationDocument, options);
+      }
+export function useAllApplicationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllApplicationQuery, AllApplicationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllApplicationQuery, AllApplicationQueryVariables>(AllApplicationDocument, options);
+        }
+export type AllApplicationQueryHookResult = ReturnType<typeof useAllApplicationQuery>;
+export type AllApplicationLazyQueryHookResult = ReturnType<typeof useAllApplicationLazyQuery>;
+export type AllApplicationQueryResult = Apollo.QueryResult<AllApplicationQuery, AllApplicationQueryVariables>;
 export const LoginDocument = gql`
     query Login($loginInput: AuthInput!) {
   login(loginInput: $loginInput) {
@@ -219,6 +286,7 @@ export const ProfileDocument = gql`
     first_name
     last_name
     email
+    languague
     is_active
     roles {
       id
@@ -255,6 +323,44 @@ export function useProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Pr
 export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
 export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
 export type ProfileQueryResult = Apollo.QueryResult<ProfileQuery, ProfileQueryVariables>;
+export const UpdateNotificationDocument = gql`
+    mutation updateNotification($updateNotificationInput: UpdateNotificationInput!) {
+  updateNotification(updateNotificationInput: $updateNotificationInput) {
+    id
+    title
+    message
+    read
+    created_at
+    updated_at
+  }
+}
+    `;
+export type UpdateNotificationMutationFn = Apollo.MutationFunction<UpdateNotificationMutation, UpdateNotificationMutationVariables>;
+
+/**
+ * __useUpdateNotificationMutation__
+ *
+ * To run a mutation, you first call `useUpdateNotificationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateNotificationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateNotificationMutation, { data, loading, error }] = useUpdateNotificationMutation({
+ *   variables: {
+ *      updateNotificationInput: // value for 'updateNotificationInput'
+ *   },
+ * });
+ */
+export function useUpdateNotificationMutation(baseOptions?: Apollo.MutationHookOptions<UpdateNotificationMutation, UpdateNotificationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateNotificationMutation, UpdateNotificationMutationVariables>(UpdateNotificationDocument, options);
+      }
+export type UpdateNotificationMutationHookResult = ReturnType<typeof useUpdateNotificationMutation>;
+export type UpdateNotificationMutationResult = Apollo.MutationResult<UpdateNotificationMutation>;
+export type UpdateNotificationMutationOptions = Apollo.BaseMutationOptions<UpdateNotificationMutation, UpdateNotificationMutationVariables>;
 export const UpdateUserDocument = gql`
     mutation updateUser($updateUserInput: UpdateUserInput!) {
   updateUser(updateUserInput: $updateUserInput) {
@@ -262,6 +368,7 @@ export const UpdateUserDocument = gql`
     first_name
     last_name
     email
+    languague
   }
 }
     `;

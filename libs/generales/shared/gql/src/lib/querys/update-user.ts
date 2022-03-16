@@ -7,6 +7,7 @@ gql`
       first_name
       last_name
       email
+      languague
     }
   }
 `;

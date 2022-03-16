@@ -1,5 +1,8 @@
 import { Badge, Skeleton } from '@mantine/core';
-import { Notification } from '@front/generales/shared/gql';
+import {
+  Notification,
+  useUpdateNotificationMutation,
+} from '@front/generales/shared/gql';
 
 interface NotificationsListProps {
   loading: boolean;
@@ -10,7 +13,8 @@ export const NotificationsList: React.FC<NotificationsListProps> = ({
   loading,
   notifications,
 }) => {
-  console.log(notifications);
+  const [updateNotification] = useUpdateNotificationMutation();
+
   return (
     <Skeleton visible={loading}>
       <ul className="divide-y divide-gray-200">
@@ -27,6 +31,13 @@ export const NotificationsList: React.FC<NotificationsListProps> = ({
                     size="lg"
                     radius="xl"
                     className="cursor-pointer"
+                    onClick={() =>
+                      updateNotification({
+                        variables: {
+                          updateNotificationInput: { id: notification.id },
+                        },
+                      })
+                    }
                   >
                     Mark as view
                   </Badge>
